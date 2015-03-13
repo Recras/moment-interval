@@ -1,6 +1,6 @@
 {
   "name": "moment-interval",
-  "main": "index.js",
+  "main": "./src/moment-interval.js",
   "homepage": "https://github.com/digitalbazaar/moment-interval",
   "repository": {
     "type": "git",
