@@ -54,8 +54,13 @@
     moment.duration.fn = durationFn.fn;
 
     moment.duration.fn.toISOString = function () {
+        // from http://www.jacklmoore.com/notes/rounding-in-javascript/
+        function round(value, decimals) {
+            return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+
         function append(number, suffix) {
-            return number > 0 ? (number + '' + suffix) : '';
+            return number > 0 ? (round(number, 3) + '' + suffix) : '';
         }
 
         return 'P' +
