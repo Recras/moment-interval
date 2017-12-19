@@ -24,6 +24,18 @@
 
     var iso8601 = /^P(?:(\d+(?:[\.,]\d{0,3})?W)|(\d+(?:[\.,]\d{0,3})?Y)?(\d+(?:[\.,]\d{0,3})?M)?(\d+(?:[\.,]\d{0,3})?D)?(?:T(\d+(?:[\.,]\d{0,3})?H)?(\d+(?:[\.,]\d{0,3})?M)?(\d+(?:[\.,]\d{0,3})?S)?)?)$/;
 
+    // map of match index to structure name
+    var matchInfo = [
+      [1, 'weeks'],
+      [2, 'years'],
+      [3, 'months'],
+      [4, 'days'],
+      [5, 'hours'],
+      [6, 'minutes'],
+      [7, 'seconds'],
+      [8, 'milliseconds']
+    ];
+
     function isISODuration(text) {
         return iso8601.test(text);
     }
@@ -38,16 +50,13 @@
         if (matches === null) {
             throw '"' + text + '" is an invalid ISO 8601 duration';
         }
-        var d = {
-            weeks: parseFloat(matches[1], 10),
-            years: parseFloat(matches[2], 10),
-            months: parseFloat(matches[3], 10),
-            days: parseFloat(matches[4], 10),
-            hours: parseFloat(matches[5], 10),
-            minutes: parseFloat(matches[6], 10),
-            seconds: parseFloat(matches[7], 10),
-            milliseconds: parseFloat(matches[8], 10)
-        };
+        // create structure for present elements
+        var d = {};
+        matchInfo.forEach(function(info) {
+          if(matches[info[0]] !== undefined) {
+            d[info[1]] = parseFloat(matches[info[0]], 10);
+          }
+        });
         return moment.duration(d);
     };
 
