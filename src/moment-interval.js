@@ -48,7 +48,7 @@
         }
         var matches = text.match(iso8601);
         if (matches === null) {
-            throw '"' + text + '" is an invalid ISO 8601 duration';
+            return durationFn.apply(moment, arguments);
         }
         // create structure for present elements
         var d = {};
